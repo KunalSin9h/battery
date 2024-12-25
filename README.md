@@ -39,6 +39,11 @@ Paste this in it.
 Description=Battery Warning
 
 [Service]
+Type=simple
+User={YOUR_USERNAME}
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/{YOUR_USERNAME}/.Xauthority
+Environment=XDG_RUNTIME_DIR=/run/user/1000
 ExecStart=/usr/local/bin/battery
 
 [Install]

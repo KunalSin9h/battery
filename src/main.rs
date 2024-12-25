@@ -79,12 +79,13 @@ fn check_and_take_action(data: String) {
         // then don't show
         if battery_percentage < 10 && charging_status == Some("Discharging") {
             App::new().run(move |cx: &mut AppContext| {
-                cx.open_window(WindowOptions::default(), |cx| {
+                if let Err(e) = cx.open_window(WindowOptions::default(), |cx| {
                     cx.new_view(|_cx| WarningWindow {
                         battery_percentage,
                     })
-                })
-                    .unwrap();
+                }) {
+                    println!("Error opening window: {}", e);
+                }
             });
         }
     } else {

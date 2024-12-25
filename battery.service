@@ -2,6 +2,11 @@
 Description=Battery Warning
 
 [Service]
+Type=simple
+User=kunal
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/kunal/.Xauthority
+Environment=XDG_RUNTIME_DIR=/run/user/1000
 ExecStart=/usr/local/bin/battery
 
 [Install]
