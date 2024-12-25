@@ -1,4 +1,4 @@
-# battery
+# 🪫 Battery
 
 Utility application for Low battery warning in [i3wm](https://i3wm.org/)
 

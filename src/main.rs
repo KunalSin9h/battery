@@ -41,13 +41,13 @@ impl Render for WarningWindow {
     fn render(&mut self, _cx: &mut ViewContext<Self>) -> impl IntoElement {
         div()
             .flex()
-            .bg(rgb(0xffffe3))
+            .bg(rgb(0xff0000))
             .size_full()
             .justify_center()
             .items_center()
-            .text_xl()
-            .text_color(rgb(0x000000))
-            .child(format!("🪫 Battery Low!, {}!", &self.text))
+            .text_3xl()
+            .text_color(rgb(0xffffff))
+            .child(format!("Battery Low!, {}!", &self.text))
     }
 }
 
@@ -76,7 +76,7 @@ fn check_and_take_action(data: String) {
             App::new().run(|cx: &mut AppContext| {
                 cx.open_window(WindowOptions::default(), |cx| {
                     cx.new_view(|_cx| WarningWindow {
-                        text: "Plugin it right now".into(),
+                        text: "Plug it right now".into(),
                     })
                 })
                     .unwrap();
