@@ -1,2 +1,10 @@
 # battery
-Utility application for Low battery warning in i3wm 
+
+Utility application for Low battery warning in [i3wm](https://i3wm.org/)
+
+![demo image](https://i.imgur.com/dI5ZmjF.png)
+
+> ![CAUTION]
+> Use only on i3wm, as it does not have buttons for minimizing / closing on screen (TODO).
+
+### Setup
