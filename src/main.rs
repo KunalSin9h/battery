@@ -1,4 +1,4 @@
-use gpui::{div, prelude::*, rgb, App, AppContext, SharedString, ViewContext, WindowOptions};
+use gpui::{div, prelude::*, rgb, App, AppContext, ViewContext, WindowOptions};
 use std::{
     thread,
     time,
@@ -34,7 +34,7 @@ but when plugged-in we will have status change to Charging
 const BATTERY_INFO_SOURCE_FILE: &str = "/sys/class/power_supply/BAT0/uevent";
 
 struct WarningWindow {
-    text: SharedString,
+    battery_percentage: u16,
 }
 
 impl Render for WarningWindow {
@@ -45,9 +45,9 @@ impl Render for WarningWindow {
             .size_full()
             .justify_center()
             .items_center()
-            .text_3xl()
+            .text_2xl()
             .text_color(rgb(0xffffff))
-            .child(format!("Battery Low!, {}!", &self.text))
+            .child(format!("Battery Low! {}%, Plug it right now.", &self.battery_percentage))
     }
 }
 
@@ -71,12 +71,17 @@ fn check_and_take_action(data: String) {
         .and_then(|line| line.split('=').nth(1))
         .and_then(|value| value.parse::<u16>().ok()) {
 
+        let charging_status =  data.lines()
+            .find(|line| line.starts_with("POWER_SUPPLY_STATUS="))
+            .and_then(|line| line.split('=').nth(1));
 
-        if battery_percentage < 90 {
-            App::new().run(|cx: &mut AppContext| {
+        // when open window when charging status is Discharging (not plug-in) hence when plugin already
+        // then don't show
+        if battery_percentage < 10 && charging_status == Some("Discharging") {
+            App::new().run(move |cx: &mut AppContext| {
                 cx.open_window(WindowOptions::default(), |cx| {
                     cx.new_view(|_cx| WarningWindow {
-                        text: "Plug it right now".into(),
+                        battery_percentage,
                     })
                 })
                     .unwrap();
