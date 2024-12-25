@@ -5,7 +5,7 @@ as time passes and requirements arise wile using it.
 
 ![demo image](https://i.imgur.com/rRBnMey.png)
 
-> ![CAUTION]
+> [!CAUTION]
 > Use only on i3wm, as it does not have buttons for minimizing / closing on screen (TODO).
 
 ### Setup
