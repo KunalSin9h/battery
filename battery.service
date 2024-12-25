@@ -1,0 +1,8 @@
+[Unit]
+Description=Battery Warning
+
+[Service]
+ExecStart=/usr/local/bin/battery
+
+[Install]
+WantedBy=multi-user.target
