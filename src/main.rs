@@ -1,9 +1,5 @@
 use gpui::{div, prelude::*, rgb, App, AppContext, ViewContext, WindowOptions};
-use std::{
-    thread,
-    time,
-    fs::read_to_string
-};
+use std::{fs::read_to_string, thread, time};
 
 /**
 Battery Supply Information is in file "$HOME/sys/class/power_supply/BAT0/uevent"
@@ -45,12 +41,14 @@ impl Render for WarningWindow {
             .size_full()
             .justify_center()
             .items_center()
-            .text_2xl()
+            .text_3xl()
             .text_color(rgb(0xffffff))
-            .child(format!("Battery Low! {}%, Plug it right now.", &self.battery_percentage))
+            .child(format!(
+                "Battery Low! {}%, Plug it right now.",
+                &self.battery_percentage
+            ))
     }
 }
-
 
 fn main() {
     // Continuously check for battery status
@@ -66,23 +64,23 @@ fn main() {
 }
 
 fn check_and_take_action(data: String) {
-    if let Some(battery_percentage) = data.lines()
+    if let Some(battery_percentage) = data
+        .lines()
         .find(|line| line.starts_with("POWER_SUPPLY_CAPACITY="))
         .and_then(|line| line.split('=').nth(1))
-        .and_then(|value| value.parse::<u16>().ok()) {
-
-        let charging_status =  data.lines()
+        .and_then(|value| value.parse::<u16>().ok())
+    {
+        let charging_status = data
+            .lines()
             .find(|line| line.starts_with("POWER_SUPPLY_STATUS="))
             .and_then(|line| line.split('=').nth(1));
 
         // when open window when charging status is Discharging (not plug-in) hence when plugin already
         // then don't show
-        if battery_percentage < 10 && charging_status == Some("Discharging") {
+        if battery_percentage < 90 && charging_status == Some("Discharging") {
             App::new().run(move |cx: &mut AppContext| {
                 if let Err(e) = cx.open_window(WindowOptions::default(), |cx| {
-                    cx.new_view(|_cx| WarningWindow {
-                        battery_percentage,
-                    })
+                    cx.new_view(|_cx| WarningWindow { battery_percentage })
                 }) {
                     println!("Error opening window: {}", e);
                 }
