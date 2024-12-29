@@ -4,7 +4,7 @@ Utility application for Low battery warning in [i3wm](https://i3wm.org/), It is 
 as time passes and requirements arise wile using it. 
 
 <div align="center">
-    <image src="https://i.imgur.com/UZo0fxi.png" alt="Demo image" />
+    <image src="https://i.imgur.com/WCbHwmR.png" alt="Demo image" />
 </div>
 
 > [!CAUTION]
