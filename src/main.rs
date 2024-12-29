@@ -77,7 +77,7 @@ fn check_and_take_action(data: String) {
 
         // when open window when charging status is Discharging (not plug-in) hence when plugin already
         // then don't show
-        if battery_percentage < 90 && charging_status == Some("Discharging") {
+        if battery_percentage < 10 && charging_status == Some("Discharging") {
             App::new().run(move |cx: &mut AppContext| {
                 if let Err(e) = cx.open_window(WindowOptions::default(), |cx| {
                     cx.new_view(|_cx| WarningWindow { battery_percentage })
